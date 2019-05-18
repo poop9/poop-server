@@ -37,6 +37,7 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
 });
 
 io.on('connection', (socket:Socket) => {
+  console.log('connectd');
   socket.on('new message', async (token: string, message: string) => {
     const authModel = AuthHelper.extract(token);
     if (authModel) {
