@@ -13,7 +13,7 @@ export class AuthController {
     @BodyParam('nickname', { required: true }) nickname: string,
   ) {
     const token = AuthHelper.generate({ uuid, nickname });
-    new UserService().getUser(uuid, nickname);
+    await new UserService().getUser(uuid, nickname);
     return {
       token,
     };
@@ -25,7 +25,7 @@ export class AuthController {
     @BodyParam('nickname', { required: true }) nickname: string,
   ) {
     const token = AuthHelper.generate({ uuid, nickname });
-    new UserService().create(uuid, nickname);
+    await new UserService().create(uuid, nickname);
     return {
       token,
     };
