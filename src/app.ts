@@ -1,6 +1,6 @@
 import express from 'express';
-import socketIo, { Socket } from 'socket.io';
 import { useExpressServer } from 'routing-controllers';
+import socketIo, { Socket } from 'socket.io';
 
 const app: express.Application = express();
 const http = require('http').Server(app);
@@ -15,6 +15,10 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
   if (!res.headersSent) {
     res.status(err.httpCode || 500).send(err.message || 'something is wrong');
   }
+});
+
+app.get('/', (_, res) => {
+  res.send('ah');
 });
 
 io.on('connection', (socket:Socket) => {
