@@ -32,4 +32,9 @@ export class AuthController {
   ) {
     return new PoopService().getTodayPoopByUser(user);
   }
+
+  @Get('/list')
+  async list() {
+    return new PoopService().getList();
+  }
 }

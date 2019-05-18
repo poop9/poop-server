@@ -39,6 +39,6 @@ export class PoopService {
   }
 
   getList(): Promise<Poop[]> {
-    return this.getConnection().createQueryBuilder('Poop').select('*, count(\'user_id\')').groupBy('user_id');
+    return this.poopRepository.query('SELECT *,COUNT(`user_id`) AS count FROM `poops` GROUP BY `user_id`');
   }
 }

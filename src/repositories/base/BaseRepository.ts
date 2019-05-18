@@ -8,7 +8,6 @@ export abstract class BaseRepository<T> {
   constructor(model: any) {
     this.repository = getRepository(model);
   }
-
   // 생성
   async create(item: DeepPartial<T>): Promise<T> {
     return this.repository.save(item);
