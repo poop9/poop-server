@@ -1,6 +1,6 @@
 import express from 'express';
 import { Action, useExpressServer } from 'routing-controllers';
-import socketIo, { Socket } from 'socket.io';
+import socketIo from 'socket.io';
 import { GeolocationService } from './services/GeolocationService';
 import { UserService } from './services/UserService';
 import { AuthHelper } from './utils/AuthHelper';
@@ -36,9 +36,9 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
   }
 });
 
-io.on('connection', (socket:Socket) => {
+io.on('connection', (socket) => {
   console.log('connectd');
-  socket.on('new message', async (token: string, message: string) => {
+  socket.on('new message', async (token, message) => {
     const authModel = AuthHelper.extract(token);
     if (authModel) {
       const user = await new UserService().getUser(authModel.uuid, authModel.nickname);

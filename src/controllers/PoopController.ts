@@ -37,4 +37,8 @@ export class AuthController {
   async list() {
     return new PoopService().getList();
   }
+  @Get('/lastGeo')
+  async last() {
+    return new PoopService().getLast();
+  }
 }
