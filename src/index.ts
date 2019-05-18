@@ -18,11 +18,11 @@ async function startApplication() {
   }
 }
 
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
+
 // 서버 실행
 startApplication();
-const http = require('http').Server(app);
-http.listen(3001);
-const io = socketIo(http);
 
 io.on('connection', (socket: socketIo.Socket) => {
   socket.on('message', (msg: string) => {
