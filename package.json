@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/coffeeyo9/server.git"
+    "url": "git+https://github.com/poop9/poop-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/coffeeyo9/server/issues"
+    "url": "https://github.com/poop9/poop-server/issues"
   },
-  "homepage": "https://github.com/coffeeyo9/server#readme",
+  "homepage": "https://github.com/poop9/poop-server#readme",
   "devDependencies": {
     "@types/express": "^4.16.1",
     "@types/jsonwebtoken": "^8.3.2",
