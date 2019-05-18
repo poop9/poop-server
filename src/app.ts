@@ -1,6 +1,7 @@
 import express from 'express';
 import { Action, useExpressServer } from 'routing-controllers';
 import socketIo, { Socket } from 'socket.io';
+import { GeolocationService } from './services/GeolocationService';
 import { UserService } from './services/UserService';
 import { AuthHelper } from './utils/AuthHelper';
 
@@ -36,10 +37,12 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
 });
 
 io.on('connection', (socket:Socket) => {
-  socket.on('new message', (token: string, message: string, x: number, y: number, z: number) => {
+  socket.on('new message', (token: string, message: string) => {
     const authModel = AuthHelper.extract(token);
-    if (message === 'yo!' && authModel) {
-      socket.emit('new message', { nickname: authModel.nickname, message:'yo!' });
+    if (authModel && message === 'yo!') {
+      const user = new UserService().getUser(authModel.uuid, authModel.nickname);
+      if (!!user) throw Error('NO USER');
+      new GeolocationService().sendYa(user, socket);
     }
   });
 });

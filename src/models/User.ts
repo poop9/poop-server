@@ -10,4 +10,6 @@ export class User extends Base {
   nickname!: string;
   @Column()
   uuid!: string;
+  @Column()
+  socketId!: string;
 }
