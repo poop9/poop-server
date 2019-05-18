@@ -1,13 +1,9 @@
 import express from 'express';
 import { Action, useExpressServer } from 'routing-controllers';
-import socketIo from 'socket.io';
-import { GeolocationService } from './services/GeolocationService';
 import { UserService } from './services/UserService';
 import { AuthHelper } from './utils/AuthHelper';
 
 const app: express.Application = express();
-const http = require('http').Server(app);
-const io = socketIo(http);
 
 useExpressServer(app, {
   routePrefix: 'api',
@@ -34,27 +30,6 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
   if (!res.headersSent) {
     res.status(err.httpCode || 500).send(err.message || 'something is wrong');
   }
-});
-
-io.on('connection', (socket) => {
-  console.log('connectd');
-  socket.on('newmessage', async (token, message) => {
-    const authModel = AuthHelper.extract(token);
-    if (authModel) {
-      const user = await new UserService().getUser(authModel.uuid, authModel.nickname);
-      if (user) {
-        new UserService().update(user);
-        if (message === 'yo!') {
-          const geolocation = await new GeolocationService().getGeolocationdByUser(user);
-          const users = new UserService().getUsers();
-          users.then((user) => {
-            console.log(user);
-          });
-          socket.emit('newmessage', geolocation);
-        }
-      }
-    }
-  });
 });
 
 export default app;
