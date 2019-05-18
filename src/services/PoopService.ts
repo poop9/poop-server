@@ -40,7 +40,7 @@ export class PoopService {
 
   getList(): Promise<Poop[]> {
 // tslint:disable-next-line: max-line-length
-    return this.poopRepository.query('SELECT *, COUNT(`user_id`) AS count,@num:=@num+1 as num FROM (select @num:=0) a, `poops` LEFT JOIN `users` ON poops.user_id = users.id GROUP BY `user_id`');
+    return this.poopRepository.query('SELECT *, COUNT(`user_id`) AS count,@num:=@num+1 as num FROM (select @num:=0) a, `poops` LEFT JOIN `users` ON poops.user_id = users.id GROUP BY `user_id` ORDER BY count desc');
   }
 
   getLast(): Promise<Poop[]> {
