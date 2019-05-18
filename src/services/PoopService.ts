@@ -18,19 +18,19 @@ export class PoopService {
     return this.poopRepository.create(newPoop);
   }
 
-  async getTodayPoopByUser(user: User): Promise<[Poop[], number]|any> {
+  async getTodayPoopByUser(user: User): Promise<number> {
     const date = new Date();
     date.setDate(date.getDate() - 1);
     const [, count] = await this.poopRepository.findWithCount({ where: { user, createdAt: MoreThan(date) } });
     return count;
   }
-  async getWeekPoopByUser(user: User): Promise<[Poop[], number]|any> {
+  async getWeekPoopByUser(user: User): Promise<number> {
     const date = new Date();
     date.setDate(date.getDate() - 7);
     const [, count] = await this.poopRepository.findWithCount({ where: { user, createdAt: MoreThan(date) } });
     return count;
   }
-  async getMonthPoopByUser(user: User): Promise<[Poop[], number]|any> {
+  async getMonthPoopByUser(user: User): Promise<number> {
     const date = new Date();
     const day = date.getDate();
     date.setDate(date.getDate() - day - 1);

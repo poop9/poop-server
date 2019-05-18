@@ -16,21 +16,30 @@ export class AuthController {
   async today(
     @CurrentUser({ required: true }) user: User,
   ) {
-    return new PoopService().getTodayPoopByUser(user);
+    const count = await new PoopService().getTodayPoopByUser(user);
+    return {
+      result: { count },
+    };
   }
   @Authorized()
   @Get('/week')
   async week(
     @CurrentUser({ required: true }) user: User,
   ) {
-    return new PoopService().getTodayPoopByUser(user);
+    const count = await new PoopService().getTodayPoopByUser(user);
+    return {
+      result: { count },
+    };
   }
   @Authorized()
   @Get('/month')
   async month(
     @CurrentUser({ required: true }) user: User,
   ) {
-    return new PoopService().getTodayPoopByUser(user);
+    const count = await new PoopService().getTodayPoopByUser(user);
+    return {
+      result: { count },
+    };
   }
   @Authorized()
   @Get('/list')
