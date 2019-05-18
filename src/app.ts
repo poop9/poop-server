@@ -46,7 +46,6 @@ io.on('connection', (socket:Socket) => {
         new UserService().update(user, socket.id);
         if (message === 'yo!') {
           const geolocation = await new GeolocationService().getGeolocationdByUser(user);
-          const socketId: string = user.socketId || '';
           const users = new UserService().getUsers();
           users.then((user) => {
             console.log(user);
