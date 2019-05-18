@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
     if (authModel) {
       const user = await new UserService().getUser(authModel.uuid, authModel.nickname);
       if (user) {
-        new UserService().update(user, socket.id);
+        new UserService().update(user);
         if (message === 'yo!') {
           const geolocation = await new GeolocationService().getGeolocationdByUser(user);
           const users = new UserService().getUsers();

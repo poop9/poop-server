@@ -24,11 +24,10 @@ export class UserService {
     return this.userRepository.create(newUser);
   }
 
-  async update(user: User, socketId: string) {
+  async update(user: User) {
     const newUser = new User();
     newUser.nickname = user.nickname;
     newUser.uuid = user.uuid;
-    newUser.socketId = socketId;
     return this.userRepository.update(user.id, newUser);
   }
 }
