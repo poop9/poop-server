@@ -2,6 +2,7 @@ import jsonwebtoken from 'jsonwebtoken';
 
 export interface AuthModel {
   uuid: string;
+  nickname: string;
 }
 
 export class AuthHelper {

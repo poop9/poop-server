@@ -20,10 +20,13 @@ useExpressServer(app, {
     const token = action.request.headers['authorization'].replace(/Bearer\s/, '');
     const authModel = AuthHelper.extract(token);
     if (!authModel) return false;
-    const user = await new UserService().getUserByUuid(authModel.uuid);
+    const user = await new UserService().getUser(authModel.uuid, authModel.nickname);
     if (!user) return false;
     return user;
   },
+  controllers: [`${__dirname}/controllers/*.[tj]s`],
+  middlewares: [`${__dirname}/middlewares/*.[tj]s`],
+  interceptors: [`${__dirname}/interceptors/*[tj]s`],
 });
 
 app.use((err: any, _: express.Request, res: express.Response, ___: express.NextFunction) => {
@@ -33,9 +36,10 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
 });
 
 io.on('connection', (socket:Socket) => {
-  socket.on('new message', (message: string) => {
-    if (message === 'yo!') {
-      socket.emit('yo!');
+  socket.on('new message', (token: string, message: string, x: number, y: number, z: number) => {
+    const authModel = AuthHelper.extract(token);
+    if (message === 'yo!' && authModel) {
+      socket.emit('new message', { nickname: authModel.nickname, message:'yo!' });
     }
   });
 });

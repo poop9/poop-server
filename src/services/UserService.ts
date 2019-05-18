@@ -1,5 +1,5 @@
 import { User } from '../models/User';
-import { UserRepository } from '../repositories/UserRepository';
+import { UserRepository } from './../repositories/UserRepository';
 
 export class UserService {
 
@@ -9,18 +9,14 @@ export class UserService {
     this.userRepository = new UserRepository();
   }
 
-  async signIn(uuid: string):  Promise<User|undefined> {
-    const user = this.userRepository.findOne({ where: { uuid } });
-    if (!!user) {
-      const newUser = new User();
-      newUser.uuid = uuid;
-      return this.userRepository.create(newUser);
-    }
-    return user;
+  async getUser(uuid: string, nickname: string): Promise<User|undefined> {
+    return this.userRepository.findOne({ where: { uuid, nickname } });
   }
 
-  async getUserByUuid(uuid: string): Promise<User|undefined> {
-    return this.userRepository.findOne({ where:{ uuid } });
+  async create(uuid: string, nickname: string):  Promise<User> {
+    const newUser = new User();
+    newUser.uuid = uuid;
+    newUser.nickname = nickname;
+    return this.userRepository.create(newUser);
   }
-
 }

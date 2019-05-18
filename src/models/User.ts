@@ -6,6 +6,8 @@ import { Base } from './Base';
 export class User extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
+  @Column({ length: 50 })
+  nickname!: string;
   @Column()
   uuid!: string;
 }

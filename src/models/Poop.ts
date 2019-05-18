@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Base } from './Base';
 import { User } from './User';
 
@@ -7,5 +7,6 @@ export class Poop extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
   @ManyToOne(_ => User)
+  @JoinColumn()
   user!: User;
 }
