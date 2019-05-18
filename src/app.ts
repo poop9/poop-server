@@ -37,12 +37,22 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
 });
 
 io.on('connection', (socket:Socket) => {
-  socket.on('new message', (token: string, message: string) => {
+  socket.on('new message', async (token: string, message: string) => {
     const authModel = AuthHelper.extract(token);
-    if (authModel && message === 'yo!') {
-      const user = new UserService().getUser(authModel.uuid, authModel.nickname);
-      if (!!user) throw Error('NO USER');
-      new GeolocationService().sendYa(user, socket);
+    if (authModel) {
+      const user = await new UserService().getUser(authModel.uuid, authModel.nickname);
+      if (user) {
+        new UserService().update(user, socket.id);
+        if (message === 'yo!') {
+          const geolocation = await new GeolocationService().getGeolocationdByUser(user);
+          const socketId: string = user.socketId || '';
+          const users = new UserService().getUsers();
+          users.then((user) => {
+            console.log(user);
+          });
+          socket.to(socketId).emit('new message', geolocation);
+        }
+      }
     }
   });
 });

@@ -1,6 +1,5 @@
 import { BodyParam, JsonController, Post, UseInterceptor } from 'routing-controllers';
 import { EntityInterceptor } from '../interceptors/EntityInterceptor';
-import { UserService } from '../services/UserService';
 import { AuthHelper } from '../utils/AuthHelper';
 
 @JsonController()
@@ -15,7 +14,6 @@ export class AuthController {
     const token = AuthHelper.generate({ uuid, nickname });
 
     return {
-      ...new UserService().getUser(uuid, nickname),
       token,
     };
   }
@@ -27,7 +25,6 @@ export class AuthController {
   ) {
     const token = AuthHelper.generate({ uuid, nickname });
     return {
-      ...new UserService().create(uuid, nickname),
       token,
     };
   }
