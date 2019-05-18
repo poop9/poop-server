@@ -10,12 +10,11 @@ export class GeolocationService {
     this.geolocationRepository = new GeolocationRepository();
   }
 
-  create(user: User, x: number, y: number, z: number): Promise<Geolocation> {
+  create(user: User, x: number, y: number): Promise<Geolocation> {
     const newGeolocation = new Geolocation();
     newGeolocation.user = user;
     newGeolocation.x = x;
     newGeolocation.y = y;
-    newGeolocation.z = z;
     return this.geolocationRepository.create(newGeolocation);
   }
 

@@ -13,9 +13,8 @@ export class GeolocationController {
     @CurrentUser({ required: true }) user: User,
     @BodyParam('x', { required: true }) x: number,
     @BodyParam('y', { required: true }) y: number,
-    @BodyParam('z', { required: true }) z: number,
   ) {
-    return new GeolocationService().create(user, x, y, z);
+    return new GeolocationService().create(user, x, y);
   }
 
 }

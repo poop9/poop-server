@@ -13,6 +13,4 @@ export class Geolocation extends Base {
   x!: number;
   @Column('double')
   y!: number;
-  @Column('double')
-  z!: number;
 }
