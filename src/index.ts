@@ -1,7 +1,7 @@
 import app from './app';
 import * as database from './database';
 
-const HOST: string = process.env.HOST || 'localhost';
+// const HOST: string = process.env.HOST || 'localhost';
 const PORT: number = Number(process.env.PORT) || 3000;
 
 async function startApplication() {
@@ -10,7 +10,7 @@ async function startApplication() {
     await database.connect();
     console.log(`database is connected successfully`);
     // 어플리케이션 실행
-    await app.listen(PORT, HOST, () => {
+    await app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
     });
   } catch (e) {
