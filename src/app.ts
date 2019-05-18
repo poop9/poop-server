@@ -51,7 +51,7 @@ io.on('connection', (socket:Socket) => {
           users.then((user) => {
             console.log(user);
           });
-          socket.to(socketId).emit('new message', geolocation);
+          socket.emit('new message', geolocation);
         }
       }
     }
