@@ -38,7 +38,7 @@ app.use((err: any, _: express.Request, res: express.Response, ___: express.NextF
 
 io.on('connection', (socket) => {
   console.log('connectd');
-  socket.on('new message', async (token, message) => {
+  socket.on('newmessage', async (token, message) => {
     const authModel = AuthHelper.extract(token);
     if (authModel) {
       const user = await new UserService().getUser(authModel.uuid, authModel.nickname);
@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
           users.then((user) => {
             console.log(user);
           });
-          socket.emit('new message', geolocation);
+          socket.emit('newmessage', geolocation);
         }
       }
     }
