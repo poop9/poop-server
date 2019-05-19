@@ -1,6 +1,9 @@
 import app from './app';
-import { GeolocationController } from './controllers/GeolocationController';
 import * as database from './database';
+import { User } from './models/User';
+import { GeolocationService } from './services/GeolocationService';
+import { PoopService } from './services/PoopService';
+import { UserService } from './services/UserService';
 import { AuthHelper } from './utils/AuthHelper';
 import socketIo = require('socket.io');
 // const HOST: string = process.env.HOST || 'localhost';
@@ -31,9 +34,16 @@ io.on('connection', (socket: socketIo.Socket) => {
     const token = message.token;
     const authModel = AuthHelper.extract(token);
     if (authModel && (msg === 'yo!')) {
-      const geolocation =  new GeolocationController().geo(authModel);
+
+      const geolocation =  new GeolocationService().getGeolocationdByUUID(authModel.uuid);
       geolocation.then((geo) => {
-        socket.emit('newmessage', geo);
+        const user =  new UserService().getUser(authModel.uuid, authModel.nickname);
+        user.then((user) => {
+          const poop = new PoopService().create(user || new User);
+          poop.then(() => {
+            socket.emit('newmessage', geo);
+          });
+        });
       });
     }
   });

@@ -6,7 +6,7 @@ import { PoopService } from '../services/PoopService';
 export class AuthController {
   @Authorized()
   @Post('/poop')
-  async signIn(
+  async poop(
     @CurrentUser({ required: true }) user: User,
   ) {
     return new PoopService().create(user);
